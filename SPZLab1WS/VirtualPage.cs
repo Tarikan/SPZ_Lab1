@@ -15,4 +15,14 @@ public class VirtualPage
     public DateTime TimeOfLastUsage { get; set; }
     
     public int ProcessId { get; init; }
+
+    public override string ToString()
+    {
+        return $"Virtual page {PageAddress}\n" +
+               $"P: {P}\n" +
+               $"U: {U}\n" +
+               $"M: {U}\n" +
+               $"Time of last usage: {TimeOfLastUsage:O}\n" +
+               $"Id of process: {ProcessId}";
+    }
 }

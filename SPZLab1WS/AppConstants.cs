@@ -11,4 +11,8 @@ public static class AppConstants
     public const int NumberOfPhysicalPages = 40;
 
     public const int T = 20;
+
+    public const int MillisecondsToResetUsageBit = 600;
+
+    public const double UpdateWorkingSetThreshold = 0.01;
 }

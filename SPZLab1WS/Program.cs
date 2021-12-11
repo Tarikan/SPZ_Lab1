@@ -13,6 +13,12 @@ public class Program
     {
         var logger = CreateLoggerInstance<Program>();
         logger.LogInformation("Program starting");
+
+        var testBench = ProgramServiceProvider.GetRequiredService<ITestBench>();
+        
+        testBench.Test();
+        
+        logger.LogInformation("Program ended successfully");
     }
 
     public static ILogger<T> CreateLoggerInstance<T>()
@@ -27,13 +33,14 @@ public class Program
 
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
-            // .WriteTo.File("log.txt")
+            .WriteTo.File("log.txt")
             .CreateLogger();
         
         builder.AddLogging(configure => configure.AddSerilog()
             .SetMinimumLevel(LogLevel.Trace));
 
         builder.AddSingleton<IMemoryManager, MemoryManager>();
+        builder.AddSingleton<ITestBench, TestBench>();
 
         return builder.BuildServiceProvider();
     }
