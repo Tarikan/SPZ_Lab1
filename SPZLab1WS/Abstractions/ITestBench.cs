@@ -1,4 +1,4 @@
-﻿namespace SPZLab1WS;
+﻿namespace SPZLab1WS.Abstractions;
 
 public interface ITestBench
 {

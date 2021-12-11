@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using SPZLab1WS.Abstractions;
 
 namespace SPZLab1WS;
 
