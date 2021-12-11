@@ -99,7 +99,7 @@ public class MemoryManager : IMemoryManager
         }
         else
         {
-            var index = _random.Next();
+            var index = Convert.ToInt32(Math.Round(_random.NextDouble() * _memoryMap.Count));
             VirtualPage virtualPage = _memoryMap[index];
             _logger.LogInformation(virtualPage.ToString());
             _logger.LogInformation(newVirtualPage.ToString());

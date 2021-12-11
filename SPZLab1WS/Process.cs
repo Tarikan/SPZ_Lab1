@@ -21,7 +21,7 @@ public class Process
         VirtualPages = Enumerable.Range(0, numberOfPages)
             .Select(idx => new VirtualPage
             {
-                PageAddress = idx * AppConstants.PageSize,
+                PageAddress = idx * AppConstants.Size,
                 P = false,
                 U = false,
                 M = false,

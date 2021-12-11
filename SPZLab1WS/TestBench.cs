@@ -9,7 +9,7 @@ namespace SPZLab1WS;
 public class TestBench : ITestBench
 {
     public const int ProcessesCount = 8;
-    public const int IterationsToRun = 30;
+    public const int IterationsToRun = 15;
     public readonly List<Process> Processes = new();
     private readonly Random _random = new();
     private readonly ILogger<TestBench> _logger;

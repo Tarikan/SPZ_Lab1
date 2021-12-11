@@ -2,13 +2,13 @@
 
 public static class AppConstants
 {
-    public const int PageSize = 4096;
+    public const int Size = 4;
 
     public const double ProcessReadWriteThreshold = 0.5;
     
     public const double ProcessWorkingSetThreshold = 0.5;
 
-    public const int NumberOfPhysicalPages = 40;
+    public const int NumberOfPhysicalPages = 15;
 
     public const int T = 20;
 
