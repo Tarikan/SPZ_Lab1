@@ -118,9 +118,10 @@ public class MemoryManager : IMemoryManager
     public override string ToString()
     {
         var result = new StringBuilder();
-        foreach (var mapEntry in _memoryMap)
+        foreach (var mapEntry in _memoryMap
+                     .Where(kvp => kvp.Value != null))
         {
-            result.Append($"{mapEntry.Key} : {mapEntry.Value}");
+            result.Append($"{mapEntry.Key} : {mapEntry.Value}\n");
         }
 
         return result.ToString();

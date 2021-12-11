@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using SPZLab1WS.Abstractions;
@@ -8,24 +7,18 @@ namespace SPZLab1WS;
 
 public class Program
 {
-    public static ServiceProvider ProgramServiceProvider { get; } = BuildServices();
-
     public static void Main(string[] args)
     {
-        var logger = CreateLoggerInstance<Program>();
+        var serviceProvider = BuildServices();
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+
         logger.LogInformation("Program starting");
 
-        var testBench = ProgramServiceProvider.GetRequiredService<ITestBench>();
+        var testBench = serviceProvider.GetRequiredService<ITestBench>();
         
         testBench.Test();
         
         logger.LogInformation("Program ended successfully");
-    }
-
-    public static ILogger<T> CreateLoggerInstance<T>()
-    {
-        return ProgramServiceProvider.GetRequiredService<ILogger<T>>()
-               ?? throw new Exception($"Cannot construct logger for type {nameof(T)}");
     }
 
     private static ServiceProvider BuildServices()

@@ -23,6 +23,6 @@ public class VirtualPage
                $"U: {U}\n" +
                $"M: {U}\n" +
                $"Time of last usage: {TimeOfLastUsage:O}\n" +
-               $"Id of process: {ProcessId}";
+               $"Process Id: {ProcessId}";
     }
 }
