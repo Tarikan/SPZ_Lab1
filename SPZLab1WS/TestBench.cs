@@ -13,11 +13,16 @@ public class TestBench : ITestBench
     private readonly Random _random = new();
     private readonly ILogger<TestBench> _logger;
     private readonly IMemoryManager _memoryManager;
+    private readonly IProcessService _processService;
 
-    public TestBench(ILogger<TestBench> logger, IMemoryManager memoryManager)
+    public TestBench(
+        ILogger<TestBench> logger,
+        IMemoryManager memoryManager,
+        IProcessService processService)
     {
         _logger = logger;
         _memoryManager = memoryManager;
+        _processService = processService;
         foreach (var i in Enumerable.Range(0, ProcessesCount))
         {
             var pagesNum = Convert.ToInt32(Math.Ceiling(_random.NextDouble() * 5));
@@ -29,10 +34,13 @@ public class TestBench : ITestBench
     {
         for (var i = 0; i < IterationsToRun; i++){
             Processes.ForEach(p => {
-                p.StartProcessing();
-                if (_random.NextDouble() < AppConstants.UpdateWorkingSetThreshold) p.UpdateWorkingSet();
+                _processService.StartProcessing(p);
+                if (_random.NextDouble() < AppConstants.UpdateWorkingSetThreshold)
+                {
+                    _processService.UpdateWorkingSet(p);
+                };
             });
-            _memoryManager.ResetUsageBit(); // фоновий процес
+            _memoryManager.ResetUsageBit();
             _logger.LogInformation(_memoryManager.ToString());
         }
     }

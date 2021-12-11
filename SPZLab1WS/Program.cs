@@ -41,6 +41,7 @@ public class Program
 
         builder.AddSingleton<IMemoryManager, MemoryManager>();
         builder.AddSingleton<ITestBench, TestBench>();
+        builder.AddSingleton<IProcessService, ProcessService>();
 
         return builder.BuildServiceProvider();
     }
