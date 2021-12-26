@@ -105,12 +105,19 @@ public class MemoryManager : IMemoryManager
         else
         {
             var rand = _random.NextDouble();
-            var index = rand > 0.1
-                ? Convert.ToInt32(Math.Round(rand * _memoryMap.Count))
-                : Convert.ToInt32(Math.Round(rand * _memoryMap.Count));
-            
-            var virtualPage = _memoryMap[index];
-            
+            VirtualPage virtualPage;
+
+            if (rand > 0.1)
+            {
+                var index = Convert.ToInt32(Math.Round(rand * _memoryMap.Count));
+                virtualPage = _memoryMap[index];
+            }
+            else
+            {
+                var index = Convert.ToInt32(Math.Round(rand * _memoryMap.Count));
+                virtualPage = _memoryMap[index];
+            }
+
             _logger.LogInformation(virtualPage.ToString());
             _logger.LogInformation(newVirtualPage.ToString());
             ReplaceVirtualPages(virtualPage, newVirtualPage);
