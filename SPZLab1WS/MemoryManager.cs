@@ -28,7 +28,7 @@ public class MemoryManager : IMemoryManager
         var entriesToUpdate = _memoryMap
             .Where(kvp => kvp.Value != null &&
                           (now - kvp.Value.TimeOfLastUsage).Milliseconds > AppConstants.MillisecondsToResetUsageBit);
-            
+
         foreach (var mapEntry in entriesToUpdate)
         {
             mapEntry.Value.U = false;
@@ -55,9 +55,14 @@ public class MemoryManager : IMemoryManager
 
     public int GetPhysicalPage(VirtualPage virtualPage)
     {
-        if (virtualPage.P)
-            return virtualPage.PageAddress;
-        ReplacePage(virtualPage);
+        if (!virtualPage.P){
+            ReplacePage(virtualPage);
+        }else{
+            virtualPage.U = true;
+            if(_random.NextDouble() > 0.5){
+                virtualPage.M = true;
+            }
+        }
         return virtualPage.PageAddress;
     }
 
@@ -99,11 +104,19 @@ public class MemoryManager : IMemoryManager
         }
         else
         {
-            var index = Convert.ToInt32(Math.Round(_random.NextDouble() * _memoryMap.Count));
-            VirtualPage virtualPage = _memoryMap[index];
+            var rand = _random.NextDouble();
+            var index = rand > 0.1
+                ? Convert.ToInt32(Math.Round(rand * _memoryMap.Count))
+                : Convert.ToInt32(Math.Round(rand * _memoryMap.Count));
+            
+            var virtualPage = _memoryMap[index];
+            
             _logger.LogInformation(virtualPage.ToString());
             _logger.LogInformation(newVirtualPage.ToString());
             ReplaceVirtualPages(virtualPage, newVirtualPage);
+            virtualPage.P = true;
+            virtualPage.U = false;
+            virtualPage.M = false;
         }
     }
 
